@@ -13,12 +13,17 @@ function Forecast({ data }) {
             <div
               key={index}
               className="forecast-item text-center p-2 m-2 border rounded">
-              <p>{new Date(forecast.dt * 1000).toLocaleDateString()}</p>
-              <img
-                src={`https://openweathermap.org/img/wn/${forecast.weather[0].icon}@2x.png`}
+                <p>
+                  {new Date(forecast.dt * 1000).toLocaleDateString('ar-EG', {
+                    day: '2-digit',
+                    month: '2-digit',
+                    year: 'numeric',
+                  })}
+                </p> 
+                 <img src={`https://openweathermap.org/img/wn/${forecast.weather[0].icon}@2x.png`}
                 alt="Weather Icon"
               />
-              <p>{forecast.main.temp}°C</p>
+              <p>{Math.round(forecast.main.temp)}°C</p>
               <p>{forecast.weather[0].description}</p>
             </div>
           ))}
