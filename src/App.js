@@ -10,38 +10,42 @@ function App() {
   const [weatherData, setWeatherData] = useState(null);
   const [forecastData, setForecastData] = useState(null);
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(null);
+  const [error, setError] = useState(null);        
 
-  const apiKey = "479b1677fe3377fe4e3c8156e8c270a1"; // ضع مفتاح API الخاص بك هنا
-  const weatherApiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=metric`;
-  const forecastApiUrl = `https://api.openweathermap.org/data/2.5/forecast?q=${city}&appid=${apiKey}&units=metric`;
+  const apiKey = "479b1677fe3377fe4e3c8156e8c270a1";
 
-  useEffect(() => {
-    fetchWeatherData();
-    fetchForecastData();
-  }, []);
-
-  const fetchWeatherData = async () => {
+  
+  const fetchWeatherData = async (cityName) => {
+    if (!cityName) return;
     setLoading(true);
     setError(null);
     try {
-      const response = await axios.get(weatherApiUrl);
+      const url = `https://api.openweathermap.org/data/2.5/weather?q=${cityName}&appid=${apiKey}&units=metric`;
+      const response = await axios.get(url);
       setWeatherData(response.data);
-    } catch (error) {
-      setError("Error fetching weather data. Please try again.");
+    } catch (err) {
+      setError(
+        err.response?.data?.message || "Error fetching weather data. Please try again."
+      );
+      setWeatherData(null);
     } finally {
       setLoading(false);
     }
   };
 
-  const fetchForecastData = async () => {
+  const fetchForecastData = async (cityName) => {
+    if (!cityName) return;
     setLoading(true);
     setError(null);
     try {
-      const response = await axios.get(forecastApiUrl);
+      const url = `https://api.openweathermap.org/data/2.5/forecast?q=${cityName}&appid=${apiKey}&units=metric`;
+      const response = await axios.get(url);
       setForecastData(response.data);
-    } catch (error) {
-      setError("Error fetching forecast data. Please try again.");
+    } catch (err) {
+      setError(
+        err.response?.data?.message || "Error fetching forecast data. Please try again."
+      );
+      setForecastData(null);
     } finally {
       setLoading(false);
     }
@@ -49,20 +53,27 @@ function App() {
 
   const handleCityChange = (newCity) => {
     setCity(newCity);
-    fetchWeatherData();
-    fetchForecastData();
   };
 
+  useEffect(() => {
+    if (city) {
+      fetchWeatherData(city);
+      fetchForecastData(city);
+    }
+  }, [city]);
+
   return (
-    <div className="container mt-5">
+    <div className="container mt-5   app-container">
       <h1 className="mb-4 text-center">Weather App</h1>
+       <hr/>
       <SearchBar onCityChange={handleCityChange} />
-      {loading && <p>Loading...</p>}
-      {error && <p className="text-danger">{error}</p>}
-      <CurrentWeather data={weatherData} />
-      <Forecast data={forecastData} />
+
+      {loading && <p className="text-center">Loading...</p>}
+      {error && <p className="text-danger text-center">{error}</p>}
+
+      {weatherData && <CurrentWeather data={weatherData} />}
+      {forecastData && <Forecast data={forecastData} />}
     </div>
   );
 }
-
 export default App;
