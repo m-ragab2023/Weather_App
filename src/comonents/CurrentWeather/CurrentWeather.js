@@ -4,12 +4,12 @@ function CurrentWeather({ data }) {
   if (!data) return null;
 
   return (
-    <div className="current-weather text-center mb-4">
+    <div className="current-weather text-center mb-4" dir="rlt">
       <h2>{data.name}</h2>
-      <p>Temperature: {data.main.temp}°C</p>
-      <p>Weather: {data.weather[0].description}</p>
-      <p>Humidity: {data.main.humidity}%</p>
-      <p>Wind Speed: {data.wind.speed} m/s</p>
+      <p>درجة الحرارة: {Math.round(data.main.temp)}</p>
+      <p>الطقس: {data.weather[0].description}</p>
+      <p>نسبة الرطوبة : {data.main.humidity}</p>
+      <p> سرعة الرياح : {data.wind.speed}</p>
       <img
         src={`https://openweathermap.org/img/wn/${data.weather[0].icon}@2x.png`}
         alt="Weather Icon"

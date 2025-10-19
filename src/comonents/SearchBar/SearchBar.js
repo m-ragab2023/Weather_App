@@ -21,10 +21,10 @@ function SearchBar({ onCityChange }) {
         className="form-control w-50 me-2"
         value={inputValue}
         onChange={handleInputChange}
-        placeholder="Enter city name"
+        placeholder="أدخل المدينة ..."
       />
       <button className="btn btn-primary" onClick={handleSearch}>
-        Search
+        البحث 
       </button>
     </div>
   );

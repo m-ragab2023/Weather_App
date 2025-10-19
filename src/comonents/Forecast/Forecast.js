@@ -5,7 +5,7 @@ function Forecast({ data }) {
 
   return (
     <div className="forecast-container mt-4">
-      <h3 className="text-center">5-Day Forecast</h3>
+      <h3 className="text-center">توقعات اليوم</h3>
       <div className="d-flex justify-content-around flex-wrap">
         {data.list
           .filter((_, index) => index % 8 === 0)

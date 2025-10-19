@@ -20,7 +20,7 @@ function App() {
     setLoading(true);
     setError(null);
     try {
-      const url = `https://api.openweathermap.org/data/2.5/weather?q=${cityName}&appid=${apiKey}&units=metric`;
+      const url = `https://api.openweathermap.org/data/2.5/weather?q=${cityName}&appid=${apiKey}&units=metric&lang=ar`;
       const response = await axios.get(url);
       setWeatherData(response.data);
     } catch (err) {
@@ -38,7 +38,7 @@ function App() {
     setLoading(true);
     setError(null);
     try {
-      const url = `https://api.openweathermap.org/data/2.5/forecast?q=${cityName}&appid=${apiKey}&units=metric`;
+      const url = `https://api.openweathermap.org/data/2.5/forecast?q=${cityName}&appid=${apiKey}&units=metric&lang=ar`;
       const response = await axios.get(url);
       setForecastData(response.data);
     } catch (err) {
@@ -64,7 +64,7 @@ function App() {
 
   return (
     <div className="container mt-5   app-container">
-      <h1 className="mb-4 text-center">Weather App</h1>
+      <h1 className="mb-4 text-center">حالة الطقس </h1>
        <hr/>
       <SearchBar onCityChange={handleCityChange} />
 
